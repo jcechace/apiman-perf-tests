@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scenario xmlns="urn:perfcake:scenario:4.0">
+
+   <generator class="DefaultMessageGenerator" threads="${thread.count:50}">
+      <run type="time" value="300000"/>
+   </generator>
+
+   <sender class="HttpSender">
+      <property name="target" value="${service.endpoint.url}"/>
+      <property name="method" value="GET"/>
+   </sender>
+
+   <reporting>
+      <reporter class="ResponseTimeStatsReporter">
+         <destination class="ChartDestination">
+            <period type="time" value="1000"/>
+            <property name="outputDir" value="${perfcake.scenario}-charts"/>
+            <property name="name" value="Response Time"/>
+            <property name="group" value="${test.group:raw}"/>
+            <property name="yAxis" value="Response Time [ms]"/>
+            <property name="attributes" value="Result,Average"/>
+         </destination>
+         <destination class="ConsoleDestination">
+            <period type="time" value="1000"/>
+         </destination>
+         <destination class="CsvDestination">
+            <period type="time" value="1000"/>
+            <property name="path" value="${perfcake.scenario}-${test.group:raw}-output.csv"/>
+            <property name="appendStrategy" value="overwrite"/>
+         </destination>
+      </reporter>
+   </reporting>
+
+</scenario>

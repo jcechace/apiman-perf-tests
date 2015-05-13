@@ -1,0 +1,6 @@
+batch
+/core-service=management/security-realm=UndertowRealm:add()
+/core-service=management/security-realm=UndertowRealm/server-identity=ssl:add(alias=apimancert, key-password="secret", keystore-password="secret", keystore-path="apiman.jks", keystore-relative-to="jboss.server.config.dir")
+/subsystem=undertow/server=default-server/https-listener=https:add(socket-binding="https", security-realm="UndertowRealm")
+:reload()
+run-batch
